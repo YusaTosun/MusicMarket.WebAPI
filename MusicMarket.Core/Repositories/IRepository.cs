@@ -13,9 +13,9 @@ namespace MusicMarket.Core.Repositories
         Task<T> GetByIdAsync(int id);
         Task<IEnumerable<T>> GetAllAsync();
         IEnumerable<T> Find(Expression<Func<T, bool>> predicate);
-        Task<T> SingleOrDefaultAsync(T Entity);
-        Task<T> AddAsync(T Entity);
-        Task AddRangeAsync(T Entity);
+        Task<T> SingleOrDefaultAsync(Expression<Func<T,bool>> predicate);
+        Task AddAsync(T Entity);
+        Task AddRangeAsync(IEnumerable<T> Entity);
         void Remove(T Entity);
         void RemoveRange(T Entity);
     }
