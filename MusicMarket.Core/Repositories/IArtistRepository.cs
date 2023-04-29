@@ -9,7 +9,7 @@ namespace MusicMarket.Core.Repositories
 {
     public interface IArtistRepository : IRepository<Artist>
     {
-        Task<IEnumerable<Artist>> GetAllWhitMusicAsync();
-        Task<Artist> GetAllWhitMusicByIdAsync();
+        Task<IEnumerable<Artist>> GetAllWithMusicAsync();
+        Task<Artist> GetWithMusicByIdAsync(int id);
     }
 }
