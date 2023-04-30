@@ -13,6 +13,12 @@ namespace MusicMarket.API.Mapping
 
             CreateMap<MusicDTO, Music>();
             CreateMap<MusicDTO, Artist>();
+
+            CreateMap<SaveMusicDTO, Music>();
+            CreateMap<SaveArtistDTO, Artist>();
+
+            CreateMap<SaveArtistDTO, MusicDTO>();
+
         }
     }
 }
