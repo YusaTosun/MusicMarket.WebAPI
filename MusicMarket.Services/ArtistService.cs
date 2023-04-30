@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace MusicMarket.Services
 {
-    public class ArtistServices : IArtistService
+    public class ArtistService : IArtistService
     {
         private readonly IUnitOfWork _unitOfWork;
-        public ArtistServices(IUnitOfWork unitOfWork)
+        public ArtistService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
