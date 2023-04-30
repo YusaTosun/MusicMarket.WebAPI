@@ -14,7 +14,7 @@ namespace MusicMarket.Data
         private readonly MusicMarketDBContext _context;
         private IMusicRepository _musicRepository;
         private IArtistRepository _artistRepository;
-        public UnitOfWork(MusicMarketDBContext context)
+        public UnitOfWork(MusicMarketDBContext context) // Sadece Burada MusicMarketDBContext kullanıyor çünkü sadece bunun için program.csde dependency injection işlemi yapılıyor.Böylece her Repoda tek bir DB örneğiyle çalışmış oluyor || Çağdaşa anlat !!!
         {
             _context = context;
         }
