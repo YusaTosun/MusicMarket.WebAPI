@@ -11,10 +11,10 @@ namespace MusicMarket.Data
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly MusicMarketDBContext _context;  //Bunların da interface olması daha iyi olmaz mıydı ?? Bunu bi düşün
+        private readonly MusicMarketDBContext _context;  //todo:Bunların da interface olması daha iyi olmaz mıydı ?? Bunu bi düşün
         private MusicRepository _musicRepository;  
         private ArtistRepository _artistRepository;
-        public UnitOfWork(MusicMarketDBContext context) // Sadece Burada MusicMarketDBContext kullanıyor çünkü sadece bunun için program.csde dependency injection işlemi yapılıyor.Böylece her Repoda tek bir DB örneğiyle çalışmış oluyor || Çağdaşa anlat !!!
+        public UnitOfWork(MusicMarketDBContext context) // todo:Sadece Burada MusicMarketDBContext kullanıyor çünkü sadece bunun için program.csde dependency injection işlemi yapılıyor.Böylece her Repoda tek bir DB örneğiyle çalışmış oluyor || Çağdaşa anlat !!!
         {
             _context = context;
         }
