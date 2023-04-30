@@ -3,6 +3,7 @@ using MusicMarket.Core;
 using MusicMarket.Core.Services;
 using MusicMarket.Data;
 using MusicMarket.Services;
+using MusicMarket.Services.DependencyExtension.Microsoft;
 using System.Reflection;
 
 namespace MusicMarket.API
@@ -13,19 +14,16 @@ namespace MusicMarket.API
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            #region Old sql Configuration
             // Add services to the container.
-            builder.Services.AddDbContext<MusicMarketDBContext>(opt=>
-            {
-                opt.UseSqlServer(builder.Configuration.GetConnectionString("connectionString"),x=>x.MigrationsAssembly("MusicMarket.Data")); //todo:Sonrasýnda tekrar detaylandýr
-            });
-            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+            //builder.Services.AddDbContext<MusicMarketDBContext>(opt =>
+            //{
+            //    opt.UseSqlServer(builder.Configuration.GetConnectionString("connectionString"), x => x.MigrationsAssembly("MusicMarket.Data")); //todo:Sonrasýnda tekrar detaylandýr
+            //}); 
+            #endregion
 
-            builder.Services.AddTransient<IMusicService, MusicService>();
-            builder.Services.AddTransient<IArtistService,ArtistService>();
-
+            builder.Services.AddDependencies();
             //builder.Services.AddAutoMapper(Assembly.GetEntryAssembly());
-            builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
