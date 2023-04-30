@@ -13,7 +13,7 @@ namespace MusicMarket.Data.Repositories
     public class Repository<T> : IRepository<T> where T : class
     {
         protected readonly DbContext context;
-        public Repository(DbContext _context)
+        public Repository(DbContext _context) //todo:Burada DbContext kullanıyor 
         {
             context = _context;
         }

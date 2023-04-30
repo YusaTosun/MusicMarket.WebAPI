@@ -16,7 +16,7 @@ namespace MusicMarket.Data.Repositories
 
         }
 
-        public async Task<IEnumerable<Music>> GetAllWithArtistAsync(int id)
+        public async Task<IEnumerable<Music>> GetAllWithArtistAsync()
         {
             return await dbContext.Set<Music>().Include(m => m.Artist).ToListAsync();
         }
