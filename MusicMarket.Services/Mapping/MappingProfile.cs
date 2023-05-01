@@ -21,6 +21,9 @@ namespace MusicMarketApi.Mapping
 
             CreateMap<SaveMusicDTO, Music>();
             CreateMap<Music, SaveMusicDTO>();
+
+            CreateMap<UpdateMusicDTO, Music>();
+            CreateMap<Music, UpdateMusicDTO>();
         }
     }
 }

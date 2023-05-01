@@ -18,12 +18,12 @@ namespace MusicMarket.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        public MusicService(IUnitOfWork unitOfWork,IMapper mapper)
+        public MusicService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-        public async Task<MusicDTO> CreateMusic(SaveMusicDTO newMusicDTO)
+        public async Task<int> CreateMusic(SaveMusicDTO newMusicDTO)
         {
             #region Old code
             //await _unitOfWork.Musics.AddAsync(newMusic);
@@ -31,15 +31,20 @@ namespace MusicMarket.Services
             //return newMusic; 
             #endregion
 
-            //var validator = new SaveMusicResourceValidator();
-            //var validateResult = validator.Validate(newMusicDTO);
-            //if (!validateResult.IsValid)
-            //{ return   }
-            return new MusicDTO();
+            var validator = new SaveMusicResourceValidator();
+            var validateResult = validator.Validate(newMusicDTO);
+            if (validateResult.IsValid)
+            {
+                var newMusic = _mapper.Map<SaveMusicDTO,Music>(newMusicDTO);
+                await _unitOfWork.Musics.AddAsync(newMusic);
+                return await _unitOfWork.CommitAsync();
+            }
+            return 0;
         }
 
-        public async Task DeleteMusic(Music music)
+        public async Task DeleteMusic(int id)
         {
+            var music = await _unitOfWork.Musics.GetByIdAsync(id);
             _unitOfWork.Musics.Remove(music);
             await _unitOfWork.CommitAsync();
         }
@@ -47,7 +52,7 @@ namespace MusicMarket.Services
         public async Task<IEnumerable<MusicDTO>> GetAllWithArtist()
         {
             var music = await _unitOfWork.Musics.GetAllWithArtistAsync();
-            return _mapper.Map<IEnumerable<Music>,IEnumerable<MusicDTO>>(music);
+            return _mapper.Map<IEnumerable<Music>, IEnumerable<MusicDTO>>(music);
         }
 
         public async Task<MusicDTO> GetMusicById(int Id)
@@ -61,11 +66,19 @@ namespace MusicMarket.Services
             return await _unitOfWork.Musics.GetAllWithArtistByArtistIdAsync(artistId);
         }
 
-        public async Task UpdateMusic(Music musicToBeUpdated, Music music)
+        public async Task UpdateMusic(UpdateMusicDTO musicToBeUpdatedDTO, int id) //todo:Dönüş daha sonra tipini ayarla 
         {
-            musicToBeUpdated.Name = music.Name;
-            musicToBeUpdated.ArtistId=music.ArtistId;
-            await _unitOfWork.CommitAsync();
+            
+            var validator = new UpdateMusicResourceValidator();
+            var validateResult = validator.Validate(musicToBeUpdatedDTO);
+            if (validateResult.IsValid)
+            {
+                var oldMusic = await _unitOfWork.Musics.GetByIdAsync(id);
+                var musicToBeUpdated = _mapper.Map<UpdateMusicDTO,Music>(musicToBeUpdatedDTO);
+                oldMusic.Name = musicToBeUpdated.Name;
+                oldMusic.ArtistId = musicToBeUpdated.ArtistId;
+                await _unitOfWork.CommitAsync();
+            }
         }
     }
 }
