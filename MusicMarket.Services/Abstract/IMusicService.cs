@@ -1,4 +1,5 @@
 ﻿using MusicMarket.Core.Models;
+using MusicMarket.Services.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +10,10 @@ namespace MusicMarket.Services.Abstract
 {
     public interface IMusicService
     {
-        Task<IEnumerable<Music>> GetAllWithArtist();
-        Task<Music> GetMusicById(int Id);
+        Task<IEnumerable<MusicDTO>> GetAllWithArtist();
+        Task<MusicDTO> GetMusicById(int Id);
         Task<IEnumerable<Music>> GetMusicsByArtistId(int artistId);
-        Task<Music> CreateMusic(Music newMusic);
+        Task<MusicDTO> CreateMusic(SaveMusicDTO newMusicDTO);
         Task UpdateMusic(Music musicToBeUpdated,Music music);
         Task DeleteMusic(Music music);
 
