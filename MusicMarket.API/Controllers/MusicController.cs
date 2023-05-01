@@ -2,11 +2,12 @@
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using MusicMarket.API.DTO;
-using MusicMarket.API.Validator;
+using MusicMarket.Services.Validator;
+using MusicMarket.Services.DTO;
 using MusicMarket.Core.Models;
 using MusicMarket.Core.Repositories;
 using MusicMarket.Core.Services;
+
 
 namespace MusicMarket.API.Controllers
 {
