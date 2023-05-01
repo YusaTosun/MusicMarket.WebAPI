@@ -1,8 +1,8 @@
 ﻿using FluentValidation;
-using MusicMarket.API.DTO;
+using MusicMarket.Services.DTO;
 using MusicMarket.Core.Models;
 
-namespace MusicMarket.API.Validator
+namespace MusicMarket.Services.Validator
 {
     public class SaveArtistResourceValidator:AbstractValidator<SaveArtistDTO>
     {
