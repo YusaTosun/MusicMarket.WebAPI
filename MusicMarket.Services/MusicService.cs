@@ -6,6 +6,7 @@ using MusicMarket.Core.Models;
 using MusicMarket.Core.Repositories;
 using MusicMarket.Services.Abstract;
 using MusicMarket.Services.DTO;
+using MusicMarket.Services.Extensions;
 using MusicMarket.Services.Validator;
 using System;
 using System.Collections.Generic;
@@ -43,16 +44,7 @@ namespace MusicMarket.Services
             }
             else
             {
-                List<CustomValidationError> errors = new();
-                foreach (var error in validateResult.Errors) 
-                {
-                    errors.Add(new()
-                    {
-                        ErrorMessage = error.ErrorMessage,
-                        PropertyName = error.PropertyName
-                    });
-                }
-                return new Response<SaveMusicDTO>(ResponseType.ValidationError,newMusicDTO,errors);
+                return new Response<SaveMusicDTO>(ResponseType.ValidationError,newMusicDTO,validateResult.ConvertToCustomValidationError());
             }
         }
 
@@ -71,25 +63,36 @@ namespace MusicMarket.Services
         public async Task<IResponse<IEnumerable<MusicDTO>>> GetAllWithArtist()
         {
             var music = await _unitOfWork.Musics.GetAllWithArtistAsync();
-            var data = _mapper.Map<IEnumerable<Music>, IEnumerable<MusicDTO>>(music);
+            var data = _mapper.Map<IEnumerable<Music>, IEnumerable<MusicDTO>>(music); // todo:Buranın null olma durumlarını daha sonra incele
             if (music == null)
             {
-                return new Response<IEnumerable<MusicDTO>>(ResponseType.NotFound, data);  // todo: data tekrar incele
+                return new Response<IEnumerable<MusicDTO>>(ResponseType.NotFound, "Musics Not Founded");  // todo: data tekrar incele
             }
             var musicDTO = _mapper.Map<IEnumerable<Music>, IEnumerable<MusicDTO>>(music);
             return new Response<IEnumerable<MusicDTO>>(ResponseType.NotFound, data);  // todo: data tekrar incele
 
         }
 
-        public async Task<MusicDTO> GetMusicById(int Id)
+        public async Task<IResponse<MusicDTO>> GetMusicById(int Id)
         {
             var music = await _unitOfWork.Musics.GetByIdAsync(Id);
-            return _mapper.Map<Music, MusicDTO>(music);
+            if (music == null)
+            {
+                return new Response<MusicDTO>(ResponseType.NotFound,"Music Not Found");
+            }
+            var musicDTO = _mapper.Map<Music, MusicDTO>(music);
+            return new Response<MusicDTO>(ResponseType.Success,musicDTO);
         }
 
-        public async Task<IEnumerable<Music>> GetMusicsByArtistId(int artistId)
+        public async Task<IResponse<IEnumerable<Music>>> GetMusicsByArtistId(int artistId)
         {
-            return await _unitOfWork.Musics.GetAllWithArtistByArtistIdAsync(artistId);
+            var musics = await _unitOfWork.Musics.GetAllWithArtistByArtistIdAsync(artistId);
+            if (musics == null)
+            {
+                return new Response<IEnumerable<Music>>(ResponseType.NotFound,"Music Not Founded");
+            }
+            return new Response<IEnumerable<Music>>(ResponseType.Success,musics);
+
         }
 
         public async Task<Response> UpdateMusic(UpdateMusicDTO musicToBeUpdatedDTO, int id) //todo:Dönüş daha sonra tipini ayarla 
@@ -112,7 +115,7 @@ namespace MusicMarket.Services
             }
             else
             {
-                return new Response(ResponseType.NotFound);
+                    return new Response<UpdateMusicDTO>(ResponseType.ValidationError, musicToBeUpdatedDTO, validateResult.ConvertToCustomValidationError());
             }
         }
     }
