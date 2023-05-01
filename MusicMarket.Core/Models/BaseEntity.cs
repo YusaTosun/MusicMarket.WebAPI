@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace MusicMarket.Core.Models
 {
-    public class Music:BaseEntity
+    public class BaseEntity
     {
-        public string Name { get; set; }
-        public int ArtistId { get; set; }
-        public Artist Artist { get; set; }
+        public int Id { get; set; }
     }
 }

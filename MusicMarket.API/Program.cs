@@ -23,7 +23,9 @@ namespace MusicMarket.API
             #endregion
 
             builder.Services.AddDependencies();
-            //builder.Services.AddAutoMapper(Assembly.GetEntryAssembly());
+            #region Alternative mapper Code
+            //builder.Services.AddAutoMapper(Assembly.GetEntryAssembly()); 
+            #endregion
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
