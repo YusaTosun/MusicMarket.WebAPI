@@ -54,15 +54,15 @@ namespace MusicMarket.Data.Repositories
             context.Set<T>().RemoveRange(Entity);
         }
 
-        public Task<T> SingleOrDefaultAsync(Expression<Func<T, bool>> predicate)
+        public async Task<T> SingleOrDefaultAsync(Expression<Func<T, bool>> predicate)
         {
-            return context.Set<T>().SingleOrDefaultAsync(predicate);
+            return await context.Set<T>().SingleOrDefaultAsync(predicate);
         }
 
         public async Task Update(T Entity,int id)
         {
-            var updatedEntity = context.Set<T>().Find(id);
-           context.Entry(updatedEntity).CurrentValues.SetValues(Entity);
+            var updatedEntity = await context.Set<T>().FindAsync(id);
+            context.Entry<T>(updatedEntity).CurrentValues.SetValues(Entity);
         }
     }
 }
