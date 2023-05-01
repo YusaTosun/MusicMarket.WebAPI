@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MusicMarket.Core.Models;
 using MusicMarket.Core.Repositories;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace MusicMarket.Data.Repositories
 {
-    public class Repository<T> : IRepository<T> where T : class
+    public class Repository<T> : IRepository<T> where T : BaseEntity
     {
         protected readonly DbContext context;
         public Repository(DbContext _context) //todo:Burada DbContext kullanıyor 
@@ -56,6 +57,12 @@ namespace MusicMarket.Data.Repositories
         public Task<T> SingleOrDefaultAsync(Expression<Func<T, bool>> predicate)
         {
             return context.Set<T>().SingleOrDefaultAsync(predicate);
+        }
+
+        public void Update(T Entity,int id)
+        {
+            var updatedEntity = context.Set<T>().Find(id);
+           context.Entry(updatedEntity).CurrentValues.SetValues(Entity);
         }
     }
 }
