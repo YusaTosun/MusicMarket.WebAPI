@@ -7,7 +7,7 @@ using MusicMarket.Services.DTO;
 using MusicMarket.Core.Models;
 using MusicMarket.Core.Repositories;
 using MusicMarket.Services.Abstract;
-
+using MusicMarket.Common.ResponseObjects;
 
 namespace MusicMarket.API.Controllers
 {
@@ -33,14 +33,14 @@ namespace MusicMarket.API.Controllers
             return Ok(musicRes);
         }
         [HttpPost]
-        public async Task<int> CreateMusic(SaveMusicDTO saveMusicRes)
+        public async Task<IResponse<SaveMusicDTO>> CreateMusic(SaveMusicDTO saveMusicRes)
         {
             return await _musicService.CreateMusic(saveMusicRes);
         }
         [HttpDelete("{id}")]
-        public async Task DeleteMusic(int id)
+        public async Task<IResponse> DeleteMusic(int id)
         {
-            await _musicService.DeleteMusic(id);
+            return await _musicService.DeleteMusic(id);
             #region Old Code
             //if (id == 0)
             //{
@@ -55,9 +55,9 @@ namespace MusicMarket.API.Controllers
             #endregion
         }
         [HttpPut]
-        public async Task Update(int id, UpdateMusicDTO updateMusicRes)
+        public async Task<Response> Update(int id, UpdateMusicDTO updateMusicRes)
         {
-            await _musicService.UpdateMusic(updateMusicRes, id);
+           return await _musicService.UpdateMusic(updateMusicRes, id);
 
             #region Old Code
             //var validator = new SaveMusicResourceValidator();
