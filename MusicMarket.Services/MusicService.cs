@@ -1,7 +1,7 @@
 ﻿using MusicMarket.Core;
 using MusicMarket.Core.Models;
 using MusicMarket.Core.Repositories;
-using MusicMarket.Core.Services;
+using MusicMarket.Services.Abstract;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace MusicMarket.Services
 {
-    public class MusicService : IMusicService
+    public class MusicService : IMusicService // todo:Concrete klasörü
     {
         private readonly IUnitOfWork _unitOfWork;
         public MusicService(IUnitOfWork unitOfWork)

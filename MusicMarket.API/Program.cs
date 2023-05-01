@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using MusicMarket.Core;
-using MusicMarket.Core.Services;
+using MusicMarket.Services.Abstract;
 using MusicMarket.Data;
 using MusicMarket.Services;
 using MusicMarket.Services.DependencyExtension.Microsoft;

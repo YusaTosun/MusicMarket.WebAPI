@@ -6,7 +6,7 @@ using MusicMarket.Services.Validator;
 using MusicMarket.Services.DTO;
 using MusicMarket.Core.Models;
 using MusicMarket.Core.Repositories;
-using MusicMarket.Core.Services;
+using MusicMarket.Services.Abstract;
 
 
 namespace MusicMarket.API.Controllers

@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using MusicMarket.Core.Services;
+using MusicMarket.Services.Abstract;
 using MusicMarket.Core;
 using System;
 using System.Collections.Generic;
