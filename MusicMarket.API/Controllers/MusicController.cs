@@ -33,61 +33,55 @@ namespace MusicMarket.API.Controllers
             return Ok(musicRes);
         }
         [HttpPost]
-        public async Task<ActionResult<MusicDTO>> CreateMusic(SaveMusicDTO saveMusicRes)
+        public async Task<int> CreateMusic(SaveMusicDTO saveMusicRes)
         {
-            //var validator = new SaveMusicResourceValidator();
-            //var validationResult = await validator.ValidateAsync(saveMusicRes);
-
-            //if (!validationResult.IsValid)
+            return await _musicService.CreateMusic(saveMusicRes);
+        }
+        [HttpDelete("{id}")]
+        public async Task DeleteMusic(int id)
+        {
+            await _musicService.DeleteMusic(id);
+            #region Old Code
+            //if (id == 0)
             //{
-            //    return BadRequest(validationResult.Errors);
+            //    return BadRequest();
+            //}
+            //var music = await _musicService.GetMusicById(id);
+            //if (music == null)
+            //{
+            //    return NotFound();
+            //}
+            //await _musicService.DeleteMusic(music); 
+            #endregion
+        }
+        [HttpPut]
+        public async Task Update(int id, UpdateMusicDTO updateMusicRes)
+        {
+            await _musicService.UpdateMusic(updateMusicRes, id);
+
+            #region Old Code
+            //var validator = new SaveMusicResourceValidator();
+            //var validateResult = await validator.ValidateAsync(saveMusicRes);
+            //if (!validateResult.IsValid)
+            //{
+            //    return BadRequest(validateResult.Errors);
             //}
 
-            //var musicToCreate = _mapper.Map<SaveMusicDTO, Music>(saveMusicRes);
-            //var newMusic = await _musicService.CreateMusic(musicToCreate);
-            //var music = await _musicService.GetMusicById(newMusic.Id);
-            //var musicRes = _mapper.Map<Music, MusicDTO>(music);
-            return Ok(/*musicRes*/);
+            //var musicToUpdate = await _musicService.GetMusicById(id);
+
+            //if (musicToUpdate == null)
+            //{
+            //    return NotFound();
+            //}
+            //var music = _mapper.Map<SaveMusicDTO, Music>(saveMusicRes);
+
+            //await _musicService.UpdateMusic(musicToUpdate, music);
+
+            //var updatedMusic = await _musicService.GetMusicById(id);
+            //var updatedMusicRes = _mapper.Map<Music, MusicDTO>(updatedMusic);
+
+            //return Ok(updatedMusicRes); 
+            #endregion
         }
-        //[HttpDelete("{id}")]
-        //public async Task<ActionResult> DeleteMusic(int id)
-        //{
-        //    if (id == 0)
-        //    {
-        //        return BadRequest();
-        //    }
-        //    var music = await _musicService.GetMusicById(id);
-        //    if (music == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    await _musicService.DeleteMusic(music);
-        //    return NoContent();
-        //}
-        //[HttpPut]
-        //public async Task<ActionResult<MusicDTO>> Update(int id, SaveMusicDTO saveMusicRes)
-        //{
-        //    var validator = new SaveMusicResourceValidator();
-        //    var validateResult = await validator.ValidateAsync(saveMusicRes);
-        //    if (!validateResult.IsValid)
-        //    {
-        //        return BadRequest(validateResult.Errors);
-        //    }
-
-        //    var musicToUpdate = await _musicService.GetMusicById(id);
-
-        //    if (musicToUpdate == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    var music = _mapper.Map<SaveMusicDTO, Music>(saveMusicRes);
-
-        //    await _musicService.UpdateMusic(musicToUpdate, music);
-
-        //    var updatedMusic = await _musicService.GetMusicById(id);
-        //    var updatedMusicRes = _mapper.Map<Music, MusicDTO>(updatedMusic);
-
-        //    return Ok(updatedMusicRes);
-        //}
     }
 }

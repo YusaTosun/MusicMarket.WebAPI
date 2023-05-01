@@ -59,7 +59,7 @@ namespace MusicMarket.Data.Repositories
             return context.Set<T>().SingleOrDefaultAsync(predicate);
         }
 
-        public void Update(T Entity,int id)
+        public async Task Update(T Entity,int id)
         {
             var updatedEntity = context.Set<T>().Find(id);
            context.Entry(updatedEntity).CurrentValues.SetValues(Entity);

@@ -13,9 +13,9 @@ namespace MusicMarket.Services.Abstract
         Task<IEnumerable<MusicDTO>> GetAllWithArtist();
         Task<MusicDTO> GetMusicById(int Id);
         Task<IEnumerable<Music>> GetMusicsByArtistId(int artistId);
-        Task<MusicDTO> CreateMusic(SaveMusicDTO newMusicDTO);
-        Task UpdateMusic(Music musicToBeUpdated,Music music);
-        Task DeleteMusic(Music music);
+        Task<int> CreateMusic(SaveMusicDTO newMusicDTO);
+        Task UpdateMusic(UpdateMusicDTO musicToBeUpdated, int id);
+        Task DeleteMusic(int id);
 
     }
 }

@@ -19,6 +19,6 @@ namespace MusicMarket.Core.Repositories
         Task AddRangeAsync(IEnumerable<T> Entity);
         void Remove(T Entity);
         void RemoveRange(T Entity);
-        void Update(T Entity,int id);
+        Task Update(T Entity,int id);
     }
 }
