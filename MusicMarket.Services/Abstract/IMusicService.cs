@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MusicMarket.Core.Services
+namespace MusicMarket.Services.Abstract
 {
     public interface IMusicService
     {
