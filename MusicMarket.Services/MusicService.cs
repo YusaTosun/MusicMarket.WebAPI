@@ -1,7 +1,11 @@
-﻿using MusicMarket.Core;
+﻿using AutoMapper;
+using FluentValidation;
+using MusicMarket.Core;
 using MusicMarket.Core.Models;
 using MusicMarket.Core.Repositories;
 using MusicMarket.Services.Abstract;
+using MusicMarket.Services.DTO;
+using MusicMarket.Services.Validator;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,15 +17,25 @@ namespace MusicMarket.Services
     public class MusicService : IMusicService // todo:Concrete klasörü
     {
         private readonly IUnitOfWork _unitOfWork;
-        public MusicService(IUnitOfWork unitOfWork)
+        private readonly IMapper _mapper;
+        public MusicService(IUnitOfWork unitOfWork,IMapper mapper)
         {
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
-        public async Task<Music> CreateMusic(Music newMusic)
+        public async Task<MusicDTO> CreateMusic(SaveMusicDTO newMusicDTO)
         {
-            await _unitOfWork.Musics.AddAsync(newMusic);
-            await _unitOfWork.CommitAsync();
-            return newMusic;
+            #region Old code
+            //await _unitOfWork.Musics.AddAsync(newMusic);
+            //await _unitOfWork.CommitAsync();
+            //return newMusic; 
+            #endregion
+
+            //var validator = new SaveMusicResourceValidator();
+            //var validateResult = validator.Validate(newMusicDTO);
+            //if (!validateResult.IsValid)
+            //{ return   }
+            return new MusicDTO();
         }
 
         public async Task DeleteMusic(Music music)
@@ -30,14 +44,16 @@ namespace MusicMarket.Services
             await _unitOfWork.CommitAsync();
         }
 
-        public async Task<IEnumerable<Music>> GetAllWithArtist()
+        public async Task<IEnumerable<MusicDTO>> GetAllWithArtist()
         {
-            return await _unitOfWork.Musics.GetAllWithArtistAsync();
+            var music = await _unitOfWork.Musics.GetAllWithArtistAsync();
+            return _mapper.Map<IEnumerable<Music>,IEnumerable<MusicDTO>>(music);
         }
 
-        public async Task<Music> GetMusicById(int Id)
+        public async Task<MusicDTO> GetMusicById(int Id)
         {
-            return await _unitOfWork.Musics.GetByIdAsync(Id);
+            var music = await _unitOfWork.Musics.GetByIdAsync(Id);
+            return _mapper.Map<Music, MusicDTO>(music);
         }
 
         public async Task<IEnumerable<Music>> GetMusicsByArtistId(int artistId)

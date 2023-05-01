@@ -1,4 +1,5 @@
-﻿using MusicMarket.Core;
+﻿using AutoMapper;
+using MusicMarket.Core;
 using MusicMarket.Core.Models;
 using MusicMarket.Services.Abstract;
 using System;
@@ -12,9 +13,11 @@ namespace MusicMarket.Services
     public class ArtistService : IArtistService
     {
         private readonly IUnitOfWork _unitOfWork;
-        public ArtistService(IUnitOfWork unitOfWork)
+        private readonly IMapper _mapper;
+        public ArtistService(IUnitOfWork unitOfWork,IMapper mapper)
         {
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
         public async Task<Artist> CreateArtist(Artist newArtist)
         {
