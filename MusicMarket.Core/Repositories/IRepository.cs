@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MusicMarket.Core.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MusicMarket.Core.Repositories
 {
-    public interface IRepository<T> where T : class
+    public interface IRepository<T> where T : BaseEntity
     {
         //getallasync - Find - singleOrDefaultAsync -addasync -addrangeasync - remove -removeranga
         Task<T> GetByIdAsync(int id);
@@ -18,5 +19,6 @@ namespace MusicMarket.Core.Repositories
         Task AddRangeAsync(IEnumerable<T> Entity);
         void Remove(T Entity);
         void RemoveRange(T Entity);
+        void Update(T Entity,int id);
     }
 }
