@@ -1,10 +1,4 @@
-using Microsoft.EntityFrameworkCore;
-using MusicMarket.Core;
-using MusicMarket.Services.Abstract;
-using MusicMarket.Data;
-using MusicMarket.Services;
 using MusicMarket.Services.DependencyExtension.Microsoft;
-using System.Reflection;
 
 namespace MusicMarket.API
 {

@@ -1,11 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using MusicMarket.Services.Abstract;
 using MusicMarket.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MusicMarket.Data;
 using Microsoft.EntityFrameworkCore;
 
